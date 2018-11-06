@@ -24,35 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     Bundle bundle;
     ListView listView;
-    private FloatingActionButton mDisplayDate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-//            bundle = getIntent().getExtras();
-//
-//            ArrayList <String> arrayList = new ArrayList<>();
-//            arrayList.add(bundle.getString("Name") + " " + bundle.getString("Date")
-//                    + " " + bundle.getString("Time"));
-//
-//            listView = findViewById(R.id.dialoglistview);
-//
-//            ArrayAdapter arrayAdapter = new ArrayAdapter(
-//                    this,
-//                    android.R.layout.simple_list_item_1,
-//                    arrayList);
-//
-//            listView.setAdapter(arrayAdapter);
-
-
-
-
 
         FloatingActionButton button1 = findViewById(R.id.ButtonAddNew);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), EventGeneratorActivity.class);
                 startActivityForResult(intent, 1);}
         });
-
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -81,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     arrayList);
             listView.setAdapter(arrayAdapter);
             }
-
         }
     }
 }

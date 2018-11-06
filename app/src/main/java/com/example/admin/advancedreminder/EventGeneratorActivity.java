@@ -123,16 +123,8 @@ public class EventGeneratorActivity extends AppCompatActivity {
                     //Gryzimas atgal y main activity
                     setResult(RESULT_OK, intent);
                     finish();
-
                 }
-
-
-
-//                Toast.makeText(EventGeneratorActivity.this, pavadinimas,
-//                        Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 }
