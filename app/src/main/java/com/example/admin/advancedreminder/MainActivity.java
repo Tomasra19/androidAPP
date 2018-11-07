@@ -1,34 +1,37 @@
 package com.example.admin.advancedreminder;
 
-import android.app.DatePickerDialog;
+
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
     Bundle bundle;
     ListView listView;
 
+    public static NotificationDatabase notificationDatabase;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        List<Notification> notifications = NotificationDatabase
+                .getDatabase(this).notificationDAO().selectAll();
+
+        for (Notification notification : notifications) {
+            System.out.println(notification);
+        }
+
 
         FloatingActionButton button1 = findViewById(R.id.ButtonAddNew);
         button1.setOnClickListener(new View.OnClickListener() {

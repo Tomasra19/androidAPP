@@ -1,4 +1,4 @@
-package com.example.admin.advancedreminder.Model;
+package com.example.admin.advancedreminder;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

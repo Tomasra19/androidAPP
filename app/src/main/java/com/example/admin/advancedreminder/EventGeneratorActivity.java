@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class EventGeneratorActivity extends AppCompatActivity {
 
@@ -72,7 +73,6 @@ public class EventGeneratorActivity extends AppCompatActivity {
                 String setDate = year + "/" + month + "/" + dayOfMonth;
                 bundle.putString("Date", setDate); //Datos stringo pridejimas i bundle
 
-
                 Toast.makeText(EventGeneratorActivity.this, setDate,
                         Toast.LENGTH_LONG).show();
             }
@@ -126,9 +126,22 @@ public class EventGeneratorActivity extends AppCompatActivity {
                     Toast.makeText(EventGeneratorActivity.this, "Pasirinkite laika",
                             Toast.LENGTH_LONG).show();
                 } else {
+
+                    Notification notif = new Notification();
+                    notif.setEventName(stEventName);
+                    notif.setDate(setDate);
+                    notif.setTime(setTime);
+                    NotificationDatabase
+                            .getDatabase(EventGeneratorActivity.this).
+                                    notificationDAO().
+                                    insertNotification(notif);
                     //Gryzimas atgal y main activity
                     setResult(RESULT_OK, intent);
                     finish();
+
+
+
+
                     //save to sharedpreferences
 //                    SharedPreferences sharedPreferences = getSharedPreferences(
 //                            "notificationInfo", Context.MODE_PRIVATE);
