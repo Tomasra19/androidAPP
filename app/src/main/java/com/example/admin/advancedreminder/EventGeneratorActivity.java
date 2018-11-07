@@ -2,7 +2,9 @@ package com.example.admin.advancedreminder;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ public class EventGeneratorActivity extends AppCompatActivity {
     Button saveButton;
     //Textinput initialization
     EditText eventName;
+    //alarm managerio
 
 
     @Override
@@ -39,9 +42,13 @@ public class EventGeneratorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_generator);
 
-//datepickeris
+        //initialize views
         DisplayDate = findViewById(R.id.buttonDatePicker);
+        DisplayTime = findViewById(R.id.buttonTimepicker);
+        eventName = findViewById(R.id.eventTextInput);
+        saveButton = findViewById(R.id.saveButton);
 
+//datepickeris
         DisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,13 +71,13 @@ public class EventGeneratorActivity extends AppCompatActivity {
                 //Priskirt prie bundle su raktazodziais
                 String setDate = year + "/" + month + "/" + dayOfMonth;
                 bundle.putString("Date", setDate); //Datos stringo pridejimas i bundle
+
+
                 Toast.makeText(EventGeneratorActivity.this, setDate,
                         Toast.LENGTH_LONG).show();
             }
         };
 //time pickeris
-        DisplayTime = findViewById(R.id.buttonTimepicker);
-
         DisplayTime.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -92,15 +99,14 @@ public class EventGeneratorActivity extends AppCompatActivity {
             public void onTimeSet (TimePicker View,int hour, int minute){
                     setTime = String.valueOf(hour) + ":" + String.valueOf(minute);
                     bundle.putString("Time", setTime);
-            }
+        }
         };
 
         //Intento sukurimas
         final Intent intent  = new Intent(EventGeneratorActivity.this,MainActivity.class);
 
         //Isaugoti mygtukas
-        eventName = findViewById(R.id.eventTextInput);
-        saveButton = findViewById(R.id.saveButton);
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +129,12 @@ public class EventGeneratorActivity extends AppCompatActivity {
                     //Gryzimas atgal y main activity
                     setResult(RESULT_OK, intent);
                     finish();
+                    //save to sharedpreferences
+//                    SharedPreferences sharedPreferences = getSharedPreferences(
+//                            "notificationInfo", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString("1",bundle.getString("Name"));
+
                 }
             }
         });
