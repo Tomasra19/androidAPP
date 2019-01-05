@@ -1,20 +1,29 @@
 package com.example.admin.advancedreminder;
 
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+
 @Dao
 public interface NotificationDAO {
 
     @Query("SELECT * from notification")
     List<Notification> selectAll();
-    @Insert
-    void insertNotification (Notification notications);
+
     @Delete
-    void deleteNotification (Notification notification);
+    void delete(Notification notification);
+
+    @Insert
+    void insertNotification(Notification notications);
+
+    @Query("DELETE FROM notification WHERE eventName = :eventName")
+    void deleteNotification(String eventName);
+
+    @Query("DELETE FROM notification ")
+    void deleteAll();
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,45 +7,57 @@
     android:orientation="vertical"
     tools:context=".EventGeneratorActivity">
 
-    <Button
-        android:id="@+id/buttonDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="Pasirinkti data"
-        android:layout_margin="5dp"
-
-         />
-
-    <Button
-        android:id="@+id/buttonTimepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="Pasirinkti laika"
-        android:layout_margin="5dp"
-         />
-
-    <EditText
-        android:id="@+id/eventTextInput"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Iveskite pavadinima"
-        android:inputType="textShortMessage"
-        android:layout_margin="5dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".EventGeneratorActivity">
 
+        <Button
+            android:id="@+id/buttonDatePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Pasirinkti data"
+            android:background="@color/colorPrimary"/>
+
+        <Button
+            android:id="@+id/buttonTimepicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Pasirinkti laika"
+            android:background="@color/colorPrimary"/>
+        />
+
+        <EditText
+            android:id="@+id/eventTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="Iveskite pavadinima"
+            android:inputType="textShortMessage" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="2dp"
         android:text="Išsaugoti"
+        android:background="@color/colorPrimary"/>
+    />
+</RelativeLayout>
 
 
-        />
 
 
 
-</LinearLayout>

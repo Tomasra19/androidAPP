@@ -20,22 +20,15 @@ import java.util.List;
 
 public class EventGeneratorActivity extends AppCompatActivity {
 
-    public Bundle bundle = new Bundle(); //su issaugoti priskirt prie bundle pries.
-
-    public String setDate; //datos stringas
-    public String setTime;  //laiko stringas
-    public String event; //pavadinimo stringas
-    //Datepickeris
+    public String setDate;
+    public String setTime;
+    public String event;
     private Button DisplayDate;
     private DatePickerDialog.OnDateSetListener DateSetListener;
-    //Timepickeris
     private Button DisplayTime;
     private TimePickerDialog.OnTimeSetListener timeSetListener;
-    //Issaugoti mygtukas initialization
     Button saveButton;
-    //Textinput initialization
     EditText eventName;
-    //alarm managerio
 
 
     @Override
@@ -69,15 +62,17 @@ public class EventGeneratorActivity extends AppCompatActivity {
         DateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                //Priskirt prie bundle su raktazodziais
-                String setDate = year + "/" + month + "/" + dayOfMonth;
-                bundle.putString("Date", setDate); //Datos stringo pridejimas i bundle
+
+                setDate = String.valueOf(year) + "/"
+                        + String.valueOf(month) + "/"
+                        + String.valueOf(dayOfMonth);
 
                 Toast.makeText(EventGeneratorActivity.this, setDate,
                         Toast.LENGTH_LONG).show();
             }
         };
 //time pickeris
+
         DisplayTime.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -96,58 +91,52 @@ public class EventGeneratorActivity extends AppCompatActivity {
             }
         });
         timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            public void onTimeSet (TimePicker View,int hour, int minute){
-                    setTime = String.valueOf(hour) + ":" + String.valueOf(minute);
-                    bundle.putString("Time", setTime);
-        }
+            public void onTimeSet(TimePicker View, int hour, int minute) {
+                if (hour < 10 && minute < 10) {
+                    setTime = "0" + String.valueOf(hour) + ":" + "0" + String.valueOf(minute);
+                } else if (hour < 10) {
+                    setTime = "0" + String.valueOf(hour) + ":" + String.valueOf(minute);
+                } else if (minute < 10) {
+                    setTime = String.valueOf(hour) + ":" + "0" + String.valueOf(minute);
+                }
+                Toast.makeText(EventGeneratorActivity.this, setTime,
+                        Toast.LENGTH_LONG).show();
+            }
         };
 
         //Intento sukurimas
-        final Intent intent  = new Intent(EventGeneratorActivity.this,MainActivity.class);
+        final Intent intent = new Intent(EventGeneratorActivity.this, MainActivity.class);
 
         //Isaugoti mygtukas
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stEventName = eventName.getText().toString();
-                bundle.putString("Name", stEventName);
+                event = eventName.getText().toString();
+                //Database operacijos
+                Notification notif = new Notification();
+                notif.setEventName(event);
+                notif.setDate(setDate);
+                notif.setTime(setTime);
+                MainActivity.database
+                        .notificationDAO()
+                        .insertNotification(notif);
 
-                intent.putExtras(bundle);
-
-                //Patikrinimas ivedimo
-                if (bundle.getString("Date") == null) {
-                    Toast.makeText(EventGeneratorActivity.this, "Pasirinkite data",
-                       Toast.LENGTH_LONG).show();
-                } else if (bundle.getString("Time") == null) {
-                    Toast.makeText(EventGeneratorActivity.this, "Pasirinkite laika",
+//                Patikrinimas ivedimo
+                if (notif.getDate() == null) {
+                    Toast.makeText(EventGeneratorActivity.this, "Pasirinkite datą",
                             Toast.LENGTH_LONG).show();
-                } else if (bundle.getString("Name") == null) {
-                    Toast.makeText(EventGeneratorActivity.this, "Pasirinkite laika",
+                } else if (notif.getTime() == null) {
+                    Toast.makeText(EventGeneratorActivity.this, "Pasirinkite laiką",
                             Toast.LENGTH_LONG).show();
+                } else if (notif.getEventName() == null) {
+                    Toast.makeText(EventGeneratorActivity.this, "Irašykite pavadinimą",
+                            Toast.LENGTH_LONG).show();
+                    return;
                 } else {
-
-                    Notification notif = new Notification();
-                    notif.setEventName(stEventName);
-                    notif.setDate(setDate);
-                    notif.setTime(setTime);
-                    NotificationDatabase
-                            .getDatabase(EventGeneratorActivity.this).
-                                    notificationDAO().
-                                    insertNotification(notif);
                     //Gryzimas atgal y main activity
                     setResult(RESULT_OK, intent);
                     finish();
-
-
-
-
-                    //save to sharedpreferences
-//                    SharedPreferences sharedPreferences = getSharedPreferences(
-//                            "notificationInfo", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putString("1",bundle.getString("Name"));
-
                 }
             }
         });
